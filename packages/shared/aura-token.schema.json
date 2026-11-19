@@ -1,0 +1,1 @@
+{"type":"object","properties":{"sub":{"type":"string"},"isHuman":{"type":"boolean"},"over13":{"type":"boolean"},"over18":{"type":"boolean"},"region":{"type":"string"}},"required":["sub","isHuman","over13","over18"]}
