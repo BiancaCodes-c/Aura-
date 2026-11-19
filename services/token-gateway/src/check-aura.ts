@@ -1,15 +1,11 @@
-// check-aura.ts — POST /v1/check -> yes/no only.
-// The app sends a token; Aura answers claims. Nothing else crosses this line.
-
-export interface AuraResult {
-  valid: boolean;
-  isHuman?: boolean;
-  over13?: boolean;
-  over18?: boolean;
-  region?: "US" | "EU" | "OTHER";
-}
-
-export async function checkAura(token: string): Promise<AuraResult> {
-  // TODO: verify signature (keys), check blocklist, check expiry + nonce
-  throw new Error("not implemented");
+import { verify } from '../../identity-core/src/keys';
+import { isRevoked } from '../../identity-core/src/revoke';
+export async function checkAura(req:any,res:any){
+  const {auraToken}=req.body||{};
+  if(!auraToken) return res.status(400).json({valid:false,reason:"no token"});
+  const decoded=await verify(auraToken);
+  if(!decoded) return res.json({valid:false,reason:"fake token"});
+  if(Date.now()>decoded.exp) return res.json({valid:false,reason:"expired"});
+  if(await isRevoked(decoded.sub)) return res.json({valid:false,reason:"revoked"});
+  return res.json({valid:true,isHuman:true,over13:decoded.over13,over18:decoded.over18,region:decoded.region,auraGlow:decoded.over18?"gold":"blue"});
 }

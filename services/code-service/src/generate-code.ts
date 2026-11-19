@@ -1,7 +1,7 @@
-// generate-code.ts — a 6-digit code, expires in 60 seconds.
-// For games / Discord / TV: no browser, no redirect — just a code.
-
-export async function generateCode(sub: string): Promise<{ code: string; expiresInSeconds: 60 }> {
-  // TODO: random 6-digit code bound to sub, stored with 60s TTL
-  throw new Error("not implemented");
+const codes=new Map<string,{sub:string;exp:number}>();
+export function generateCode(sub:string){
+  const code=String(Math.floor(100000+Math.random()*900000));
+  codes.set(code,{sub,exp:Date.now()+60000});
+  return code;
 }
+export function getCode(code:string){ return codes.get(code); }

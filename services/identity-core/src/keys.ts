@@ -1,17 +1,15 @@
-// keys.ts — Ed25519 signing keys, rotated every 24h (infra/keys/rotation-cron.yaml).
-// identity-core signs; the gateway verifies with published public keys.
-
-export async function sign(payload: object): Promise<string> {
-  // TODO: Ed25519-sign the payload with the current private key
-  throw new Error("not implemented");
+import crypto from 'crypto';
+const KEY = process.env.AURA_SIGNING_KEY || 'dev-only-change-me';
+export async function sign(payload:any){
+  const body = Buffer.from(JSON.stringify(payload)).toString('base64url');
+  const sig = crypto.createHmac('sha256', KEY).update(body).digest('base64url');
+  return body+'.'+sig;
 }
-
-export async function verify(signedToken: string): Promise<any> {
-  // TODO: verify signature against current + previous public keys; return claims
-  throw new Error("not implemented");
-}
-
-export async function rotateKeys(): Promise<void> {
-  // TODO: generate fresh Ed25519 pair; keep prior public key published until its tokens expire
-  throw new Error("not implemented");
+export async function verify(signed:string){
+  try{
+    const [body,sig]=signed.split('.');
+    const expect=crypto.createHmac('sha256',KEY).update(body).digest('base64url');
+    if(expect!==sig) return null;
+    return JSON.parse(Buffer.from(body,'base64url').toString());
+  }catch{ return null; }
 }

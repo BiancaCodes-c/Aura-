@@ -1,8 +1,6 @@
-// oidc.ts — OIDC adapter: speaks the "Sign in with Google" language,
-// so platforms can adopt Aura like any other identity provider —
-// except this provider hands back proof, not profiles.
-
-export const oidcDiscovery = {
-  // TODO: /.well-known/openid-configuration pointing at gateway endpoints
-  // Claims exposed: isHuman, over13, over18, region. Nothing else exists to expose.
+export const auraOIDC={
+  issuer:"https://api.aura.social",
+  authorization_endpoint:"https://aura.social/verify",
+  token_endpoint:"https://api.aura.social/v1/token",
+  userinfo_endpoint:"https://api.aura.social/v1/check",
 };

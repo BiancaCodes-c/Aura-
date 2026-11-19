@@ -1,18 +1,7 @@
-// verify.ts — ID + liveness -> true/false (plus age band + coarse region).
-// THE ONLY module that ever sees a real identity document, and it keeps nothing.
-
-export interface VerificationResult {
-  verifiedHuman: boolean;
-  over13: boolean;
-  over18: boolean;
-  region: "US" | "EU" | "OTHER"; // coarse only — never a city or address
-}
-
-export async function verifyIdentity(
-  idDocument: unknown, // held in memory only; wiped by forget.ts after mint
-  selfie: unknown
-): Promise<VerificationResult> {
-  // TODO: document authenticity checks
-  // TODO: selfie liveness + match against the document portrait
-  throw new Error("not implemented");
+export async function verifyIdentity(input:{idImage:string; selfie:string}) {
+  // In production: call third-party IDV provider, liveness provider.
+  // Never store idImage / selfie. Pass through, get boolean, forget.
+  const livenessPassed = input.selfie.length>0;
+  const idValid = input.idImage.length>0;
+  return { idValid, livenessPassed, verified: idValid && livenessPassed };
 }

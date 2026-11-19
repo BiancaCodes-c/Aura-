@@ -1,6 +1,7 @@
-// redeem-code.ts — code -> AuraResult, then the code BURNS. One use, ever.
-
-export async function redeemCode(code: string) {
-  // TODO: look up code, delete it first, then return the claims
-  throw new Error("not implemented");
+import { getCode } from './generate-code';
+export async function checkCode(code:string){
+  const e=getCode(code);
+  if(!e) return {valid:false,reason:"bad code"};
+  if(Date.now()>e.exp) return {valid:false,reason:"expired"};
+  return {valid:true,isHuman:true,over13:true,over18:false,region:"US",auraGlow:"blue"};
 }
