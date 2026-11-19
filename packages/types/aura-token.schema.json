@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuraToken",
+  "description": "The ONLY shape a token can be. No name. No DOB. No ID number.",
+  "type": "object",
+  "required": ["sub", "isHuman", "over13", "over18", "region", "iat", "exp", "nonce"],
+  "properties": {
+    "sub": { "type": "string", "description": "Random user id, unlinkable to any real identity." },
+    "isHuman": { "const": true },
+    "over13": { "type": "boolean" },
+    "over18": { "type": "boolean" },
+    "region": { "enum": ["US", "EU", "OTHER"], "description": "Coarse only. No city, no state." },
+    "iat": { "type": "integer" },
+    "exp": { "type": "integer", "description": "Stolen tokens die fast: 30 days, then re-verify." },
+    "nonce": { "type": "string", "description": "Stops replay attacks." }
+  },
+  "additionalProperties": false
+}

@@ -1,14 +1,12 @@
-// Aura — idlayer
+// revoke.ts — kill a token via the blocklist. No identity needed, none kept.
+// The blocklist itself lives in blocklist.ts (Redis set of revoked subs).
 
-// revoke.ts — kill a token. No personal data needed, because none is kept.
-// Revocation is by token id (jti) only.
+import { addToBlocklist, isBlocked } from "./blocklist";
 
-export async function revokeToken(jti: string): Promise<void> {
-  // TODO: add jti to the revocation list the token-gateway checks
-  throw new Error("not implemented");
+export async function revokeToken(sub: string): Promise<void> {
+  await addToBlocklist(sub);
 }
 
-export async function isRevoked(jti: string): Promise<boolean> {
-  // TODO: revocation list lookup
-  throw new Error("not implemented");
+export async function isRevoked(sub: string): Promise<boolean> {
+  return isBlocked(sub);
 }

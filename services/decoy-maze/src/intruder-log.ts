@@ -1,14 +1,14 @@
-// Aura — idlayer
-
-// intruder-log.ts — every maze hit is evidence. Log it, learn from it.
+// intruder-log.ts — logs IP, fingerprint, and what they tried.
+// Feeds the dashboard's decoy-logs view and ban.ts.
 
 export interface IntruderEvent {
   at: string;
-  source: string;
+  ip: string;
+  fingerprint: string;
   path: string;
-  note?: string;
+  tried: string;
 }
 
 export function logIntruder(event: IntruderEvent): void {
-  // TODO: append to the intruder log; feed patterns to the intelligence layer
+  // TODO: append to intruder log; count hits toward the 5-hit auto-ban
 }

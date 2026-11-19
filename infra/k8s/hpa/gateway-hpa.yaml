@@ -1,0 +1,18 @@
+# The gateway scales 3 -> 10 under load. The core NEVER scales (see identity-core.yaml: replicas: 1).
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: token-gateway
+  namespace: aura-gateway
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: token-gateway
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target: { type: Utilization, averageUtilization: 70 }

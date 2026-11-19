@@ -1,19 +1,17 @@
-// Aura — idlayer
+// keys.ts — Ed25519 signing keys, rotated every 24h (infra/keys/rotation-cron.yaml).
+// identity-core signs; the gateway verifies with published public keys.
 
-// keys.ts — signing keys, rotated on a schedule (see infra/keys/rotation-cron.yaml).
-// Gateways verify with public keys; only identity-core holds private keys.
-
-export interface SigningKey {
-  keyId: string;
-  publicKey: string;
-}
-
-export async function currentSigningKey(): Promise<{ keyId: string; privateKey: string }> {
-  // TODO: load the active private key from the secret store
+export async function sign(payload: object): Promise<string> {
+  // TODO: Ed25519-sign the payload with the current private key
   throw new Error("not implemented");
 }
 
-export async function publicKeys(): Promise<SigningKey[]> {
-  // TODO: publish current + previous public keys so gateways can verify during rotation
+export async function verify(signedToken: string): Promise<any> {
+  // TODO: verify signature against current + previous public keys; return claims
+  throw new Error("not implemented");
+}
+
+export async function rotateKeys(): Promise<void> {
+  // TODO: generate fresh Ed25519 pair; keep prior public key published until its tokens expire
   throw new Error("not implemented");
 }

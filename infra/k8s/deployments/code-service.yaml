@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-service
+  namespace: aura-gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: code-service }
+  template:
+    metadata:
+      labels: { app: code-service }
+    spec:
+      containers:
+        - name: code-service
+          image: aura/code-service:latest
+          ports:
+            - containerPort: 4300

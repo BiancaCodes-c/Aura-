@@ -1,11 +1,12 @@
-# Signing-key rotation — runs on schedule; old public keys stay published
-# until every token signed with them has expired.
+# Ed25519 signing-key rotation — every 24h.
+# Old public keys stay published until every token signed with them expires.
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: aura-key-rotation
+  namespace: aura-core
 spec:
-  schedule: "0 3 * * 0"
+  schedule: "0 0 * * *"
   jobTemplate:
     spec:
       template:

@@ -1,0 +1,21 @@
+# core-isolated: identity-core can ONLY talk to the gateway (and Redis).
+# No internet. No other pods. Nothing else exists to it.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: core-isolated
+  namespace: aura-core
+spec:
+  podSelector:
+    matchLabels: { app: identity-core }
+  policyTypes: [Ingress, Egress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels: { aura: gateway }
+  egress:
+    - to:
+        - podSelector:
+            matchLabels: { app: redis }
+      ports:
+        - port: 6379

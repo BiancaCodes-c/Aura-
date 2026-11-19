@@ -1,15 +1,15 @@
-# Threat model
+# Threat model — "what if we're hacked? nothing to steal"
 
 ## Assets
-- Raw identity documents (exist for seconds, in memory, in identity-core only)
-- Signing keys (private key compromise = forged tokens; mitigated by rotation)
-- The revocation list and token integrity
+- Raw identity documents — exist for seconds, in memory + 60s-TTL temp-store, in identity-core only
+- Ed25519 signing keys — rotated every 24h; compromise window is one day of tokens, revocable by sub
+- The blocklist and token integrity
 
 ## Attackers
-- Bots mass-creating accounts (decoy-maze, rate limits, liveness)
-- Token thieves replaying someone else's token (short TTL, revocation)
-- Forgers minting fake tokens (signature verification, key rotation)
-- Insiders / breaches after the fact (nothing stored = nothing to steal)
+- Bots mass-creating accounts -> liveness, decoy-maze, 5-hit auto-ban
+- Token thieves -> 30-day expiry, nonce, revocation by sub
+- Forgers -> Ed25519 signatures, gateway verification
+- Breachers after the fact -> nothing stored = nothing to steal
 
 ## Simulations
-See `tests/attack-sim/` — steal an ID, fake a token, replay a token.
+See `tests/attack-sim/` — steal an ID, forge a token, replay a token, walk into the honeypot.

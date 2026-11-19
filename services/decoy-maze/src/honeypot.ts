@@ -1,10 +1,10 @@
-// Aura — idlayer
+// honeypot.ts — fake endpoints: /v1/admin, /v1/users, /v1/ids.
+// They look like the crown jewels. They hold nothing real.
+// Anything that touches them is, by definition, not a real client.
 
-// honeypot.ts — fake endpoints for bots to hit.
-// Anything that touches these is, by definition, not a real client.
-// Decoys look valuable and hold nothing real.
+export const HONEYPOT_PATHS = ["/v1/admin", "/v1/users", "/v1/ids"];
 
 export function registerHoneypots(): string[] {
-  // TODO: mount convincing fake routes (e.g. /admin, /internal/identities)
-  return [];
+  // TODO: mount the fake routes with convincing, endless fake data
+  return HONEYPOT_PATHS;
 }

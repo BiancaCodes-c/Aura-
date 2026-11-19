@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aura-config
+  namespace: aura-core
+data:
+  RETENTION: "60"        # seconds — raw ID never lives longer
+  TOKEN_TTL: "30d"       # then re-verify
+  KEY_ROTATION: "24h"    # Ed25519 signing keys
+  GATEWAY_RATE_LIMIT: "100/min per API key"
