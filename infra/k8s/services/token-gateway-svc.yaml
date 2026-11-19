@@ -1,11 +1,4 @@
 apiVersion: v1
 kind: Service
-metadata:
-  name: token-gateway
-  namespace: aura-gateway
-spec:
-  type: LoadBalancer
-  selector: { app: token-gateway }
-  ports:
-    - port: 443
-      targetPort: 3000
+metadata: {name: aura-gateway, namespace: aura-gateway}
+spec: {type: LoadBalancer, selector: {app: aura-gateway}, ports: [{port: 443, targetPort: 3000}]}

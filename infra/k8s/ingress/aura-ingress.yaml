@@ -1,22 +1,7 @@
-# ONLY the gateway and the verifier-app are public. identity-core has NO ingress — by design, forever.
 apiVersion: networking.k8s.io/v1
 kind: Ingress
-metadata:
-  name: aura-ingress
-  namespace: aura-gateway
+metadata: {name: aura-ingress, namespace: aura-gateway}
 spec:
   rules:
-    - host: api.aura.example
-      http:
-        paths:
-          - path: /v1
-            pathType: Prefix
-            backend:
-              service: { name: token-gateway, port: { number: 443 } }
-    - host: verify.aura.example
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service: { name: verifier-app, port: { number: 3001 } }
+  - host: api.aura.social
+    http: {paths: [{path: /, pathType: Prefix, backend: {service: {name: aura-gateway, port: {number: 443}}}}]}

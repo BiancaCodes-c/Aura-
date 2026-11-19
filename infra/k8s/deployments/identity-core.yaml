@@ -1,19 +1,14 @@
-# identity-core: replicas: 1. NO ingress. It NEVER scales — one vault, one door.
 apiVersion: apps/v1
 kind: Deployment
-metadata:
-  name: identity-core
-  namespace: aura-core
+metadata: {name: identity-core, namespace: aura-core}
 spec:
   replicas: 1
-  selector:
-    matchLabels: { app: identity-core }
+  selector: {matchLabels: {app: identity-core}}
   template:
-    metadata:
-      labels: { app: identity-core }
+    metadata: {labels: {app: identity-core}}
     spec:
       containers:
-        - name: identity-core
-          image: aura/identity-core:latest
-          ports:
-            - containerPort: 4000
+      - name: core
+        image: aura/core:latest
+        ports: [{containerPort: 4000}]
+        env: [{name: RETENTION_SECONDS, value: "60"}]

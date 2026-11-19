@@ -1,19 +1,14 @@
-# token-gateway: replicas 3-10 with HPA. The bouncer scales; the vault doesn't.
 apiVersion: apps/v1
 kind: Deployment
-metadata:
-  name: token-gateway
-  namespace: aura-gateway
+metadata: {name: aura-gateway, namespace: aura-gateway}
 spec:
   replicas: 3
-  selector:
-    matchLabels: { app: token-gateway }
+  selector: {matchLabels: {app: aura-gateway}}
   template:
-    metadata:
-      labels: { app: token-gateway }
+    metadata: {labels: {app: aura-gateway}}
     spec:
       containers:
-        - name: token-gateway
-          image: aura/token-gateway:latest
-          ports:
-            - containerPort: 3000
+      - name: gateway
+        image: aura/gateway:latest
+        ports: [{containerPort: 3000}]
+        env: [{name: CORE_URL, value: "http://identity-core.aura-core.svc.cluster.local:4000"}]

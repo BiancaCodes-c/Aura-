@@ -1,18 +1,4 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata:
-  name: decoy-maze
-  namespace: aura-decoy
-spec:
-  replicas: 2
-  selector:
-    matchLabels: { app: decoy-maze }
-  template:
-    metadata:
-      labels: { app: decoy-maze }
-    spec:
-      containers:
-        - name: decoy-maze
-          image: aura/decoy-maze:latest
-          ports:
-            - containerPort: 4400
+metadata: {name: decoy-maze, namespace: aura-decoy}
+spec: {replicas: 2, selector: {matchLabels: {app: decoy-maze}}, template: {metadata: {labels: {app: decoy-maze}}, spec: {containers: [{name: decoy, image: aura/decoy:latest}]}}}

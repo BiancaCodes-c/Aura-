@@ -1,18 +1,4 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata:
-  name: verifier-app
-  namespace: aura-gateway
-spec:
-  replicas: 2
-  selector:
-    matchLabels: { app: verifier-app }
-  template:
-    metadata:
-      labels: { app: verifier-app }
-    spec:
-      containers:
-        - name: verifier-app
-          image: aura/verifier-app:latest
-          ports:
-            - containerPort: 3001
+metadata: {name: verifier-app, namespace: aura-gateway}
+spec: {replicas: 2, selector: {matchLabels: {app: verifier-app}}, template: {metadata: {labels: {app: verifier-app}}, spec: {containers: [{name: app, image: aura/verifier:latest}]}}}

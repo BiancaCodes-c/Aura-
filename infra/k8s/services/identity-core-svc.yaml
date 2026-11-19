@@ -1,12 +1,4 @@
-# ClusterIP ONLY. No LoadBalancer, no NodePort, no ingress — the vault is unreachable from outside.
 apiVersion: v1
 kind: Service
-metadata:
-  name: identity-core
-  namespace: aura-core
-spec:
-  type: ClusterIP
-  selector: { app: identity-core }
-  ports:
-    - port: 4000
-      targetPort: 4000
+metadata: {name: identity-core, namespace: aura-core}
+spec: {type: ClusterIP, selector: {app: identity-core}, ports: [{port: 4000}]}
