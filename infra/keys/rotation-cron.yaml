@@ -1,0 +1,17 @@
+# Signing-key rotation — runs on schedule; old public keys stay published
+# until every token signed with them has expired.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: aura-key-rotation
+spec:
+  schedule: "0 3 * * 0"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: rotate
+              image: aura/identity-core:latest
+              command: ["node", "dist/keys.js", "--rotate"]

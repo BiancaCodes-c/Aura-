@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AuraTokenClaims",
+  "type": "object",
+  "required": ["sub", "isHuman", "over13", "over18", "region", "iat", "exp"],
+  "properties": {
+    "sub": { "type": "string", "description": "Opaque random subject id. Never derived from identity data." },
+    "isHuman": { "type": "boolean" },
+    "over13": { "type": "boolean" },
+    "over18": { "type": "boolean" },
+    "region": { "type": "string", "description": "Coarse region only, e.g. US, EU. Never a city or address." },
+    "iat": { "type": "integer" },
+    "exp": { "type": "integer" }
+  },
+  "additionalProperties": false
+}
